@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SubNet Configurator</string>
+    <string name="Settings">Settings</string>
+    <string name="subnetCalc">Subnet Calculator</string>
+    <string name="vlsmCalc">VLSM Calculator</string>
+    <string name="maskConv">Mask Converter</string>
+    <string name="subnetIcon">subnetIcon</string>
+    <string name="Title">SUBNET CONFIGURATOR</string>
+    <string name="savedConfg">Saved Configuration</string>
+    <string name="ipPart1">192</string>
+    <string name="ipPart2">168</string>
+    <string name="ipPart3">1</string>
+    <string name="ipPart4">0</string>
+    <string name="ipPart5">24</string>
+    <string name="dot">.</string>
+    <string name="slash">/</string>
+    <string name="ip4Address">IPv4 network address</string>
+    <string name="trash">Empty</string>
+    <string name="calculate">Calculate</string>
+    <string name="networkConfiguration">Network Configuration</string>
+    <string name="amountNetwork">Enter the amount of networks:</string>
+    <string name="apply">Apply</string>
+
+</resources>
