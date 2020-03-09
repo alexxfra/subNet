@@ -59,6 +59,7 @@ public class SubnetCalcActivity extends AppCompatActivity {
 
 
         subnetBar = getSupportActionBar();
+        assert subnetBar != null;
         subnetBar.setTitle("Subnet Calculator");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,7 +70,7 @@ public class SubnetCalcActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean clearedChecks = true;
                 int prefix = 0;
-                long address[] = new long[4];
+                long[] address = new long[4];
                 String strAddress = oct1.getText().toString() + " " + oct2.getText().toString() + " " + oct3.getText().toString() + " " + oct4.getText().toString();
 
                 try {
@@ -79,7 +80,6 @@ public class SubnetCalcActivity extends AppCompatActivity {
                 catch (Exception e){
                     Log.d("EXCEPTION", "onClick: ZLE UDAJE KOKOT");
                     clearedChecks = false;
-
                     Toast.makeText(context,"Fields can not be empty", Toast.LENGTH_SHORT).show();
 
                 }
@@ -107,9 +107,9 @@ public class SubnetCalcActivity extends AppCompatActivity {
     }
 
     public long[] inputToLongArray(String input){
-        String strInput[] = input.split(" ");
+        String[] strInput = input.split(" ");
 
-        long LInput[] = new long[4];
+        long[] LInput = new long[4];
 
         for(int i = 0; i < 4; i++){
             LInput[i] = Long.parseLong(strInput[i]);

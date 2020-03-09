@@ -14,7 +14,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/softWhite</item>
         <item name="android:windowBackground">@color/darkColor</item>
-        <item name="android:background">@color/darkColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

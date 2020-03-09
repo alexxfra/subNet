@@ -19,6 +19,7 @@
     <string name="calculate">Calculate</string>
     <string name="networkConfiguration">Network Configuration</string>
     <string name="amountNetwork">Enter the amount of networks:</string>
-    <string name="apply">Apply</string>
-
+    <string name="apply">Apply</string>]
+    <string name="maskPlaceholder">/1&#8211;31</string>
+    <string name="maskPrefix">/%1$s</string>
 </resources>

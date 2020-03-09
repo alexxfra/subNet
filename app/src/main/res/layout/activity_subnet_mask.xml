@@ -13,24 +13,33 @@
         android:id="@+id/prefix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:baselineAligned="false"
-        android:text="/1-31"
+        android:text="@string/maskPlaceholder"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/subnetMask"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/subnetMask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/maskSeeker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <SeekBar
         android:id="@+id/maskSeeker"
         android:layout_width="375dp"
         android:layout_height="36dp"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prefix" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -43,7 +52,7 @@
         android:id="@+id/specs1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +62,7 @@
         android:id="@+id/decOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/specs1"
@@ -63,7 +72,7 @@
         android:id="@+id/binOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/specs2"
@@ -73,7 +82,7 @@
         android:id="@+id/specs2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"

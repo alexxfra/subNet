@@ -25,66 +25,56 @@ public class Network {
     public void setNetwork(long[] input, int prefix){
         this.prefix = prefix;
 
-        /**
-         * HOST IP
-         */
         this.hostInput = ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]);
 
-        /**
-         * SUBNET MASK
-         */
-        String subnetMaskString = "";
-        while(subnetMaskString.length() < prefix){
-            subnetMaskString += "1";
+        StringBuilder sb = new StringBuilder();
+        while(sb.length() < prefix){
+            sb.append("1");
         }
-        this.mask = Long.parseLong(subnetMaskString,2)<<(32-prefix);
+        this.mask = Long.parseLong(sb.toString(),2)<<(32-prefix);
 
-        /**
-         * WILDCARD
-         */
-        subnetMaskString = "";
-        while(subnetMaskString.length() < 32){
-            if(subnetMaskString.length() < prefix)
-                subnetMaskString += "0";
+        sb.delete(0, sb.length());
+        while(sb.length() < 32){
+            if(sb.length() < prefix)
+                sb.append("0");
             else
-                subnetMaskString += "1";
+                sb.append("1");
         }
-        this.wildcard = Long.parseLong(subnetMaskString,2);
+        this.wildcard = Long.parseLong(sb.toString(),2);
 
-        /**
-         * NETWORK
-         */
-        this.network = ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]) & this.mask;
+        this.network = this.hostInput & this.mask;
 
-        /**
-         * BROADCAST
-         */
         this.broadcast = this.network + this.wildcard;
     }
 
     public void updateMask(int prefix){
         this.prefix = prefix;
 
-        String subnetMaskString = "";
-        while(subnetMaskString.length() < prefix){
-            subnetMaskString += "1";
+        StringBuilder sb = new StringBuilder();
+        while(sb.length() < prefix){
+            sb.append("1");
         }
-        this.mask = Long.parseLong(subnetMaskString,2)<<(32-prefix);
+        this.mask = Long.parseLong(sb.toString(),2)<<(32-prefix);
 
-        subnetMaskString = "";
-        while(subnetMaskString.length() < 32){
-            if(subnetMaskString.length() < prefix)
-                subnetMaskString += "0";
+        sb.delete(0, sb.length());
+        while(sb.length() < 32){
+            if(sb.length() < prefix)
+                sb.append("0");
             else
-                subnetMaskString += "1";
+                sb.append("1");
         }
-        this.wildcard = Long.parseLong(subnetMaskString,2);
+        this.wildcard = Long.parseLong(sb.toString(),2);
 
         this.network = this.hostInput & this.mask;
 
         this.broadcast = this.network + this.wildcard;
 
     }
+
+    /**
+     * Printing functions
+     * @return
+     */
 
     public String toBits(){
         return  formatIpBits(this.network) + "\n" +
@@ -102,11 +92,27 @@ public class Network {
                 formatIpDecimals(this.broadcast);
     }
 
+    public String getMaskInfo(){
+        return  formatIpDecimals(this.mask) + "\n" +
+                formatIpDecimals(this.wildcard) + "\n" +
+                getHostCount();
+    }
+
+    public String getBitMaskInfo(){
+        return  formatIpBits(this.mask) + "\n" +
+                formatIpBits(this.wildcard);
+    }
+
+    /**
+     *Formatting IP addresss
+     * @return
+     */
+
     public String formatIpDecimals(long ipInput){
         StringBuilder ipOutput = new StringBuilder();
-        ipOutput.append((ipInput>>24) + ".");
-        ipOutput.append(((ipInput>>16) & 255) + ".");
-        ipOutput.append(((ipInput>>8) & 255) +".");
+        ipOutput.append((ipInput>>24)).append(".");
+        ipOutput.append((ipInput>>16) & 255).append(".");
+        ipOutput.append((ipInput>>8) & 255).append(".");
         ipOutput.append(ipInput & 255);
         return ipOutput.toString();
     }
@@ -128,15 +134,8 @@ public class Network {
         return Integer.toString((int) Math.pow(2,32-this.prefix)-2);
     }
 
-    public String getMaskInfo(){
-        return  formatIpDecimals(this.mask) + "\n" +
-                formatIpDecimals(this.wildcard) + "\n" +
-                getHostCount();
-    }
-
-    public String getBitMaskInfo(){
-        return  formatIpBits(this.mask) + "\n" +
-                formatIpBits(this.wildcard);
+    public String getMaskDecimal(){
+        return formatIpDecimals(this.mask);
     }
 
 
