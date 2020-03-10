@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,17 +30,17 @@
 
         <LinearLayout
             android:id="@+id/ipSubnetCalc"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/octet1"
+                android:textSize="20sp"
+                android:id="@+id/vlsmOctet1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:baselineAligned="false"
-                android:textSize="20dp"
                 android:ems="5"
                 android:hint="@string/ipPart1"
                 android:importantForAutofill="no"
@@ -49,7 +48,7 @@
                 android:maxLength="3" />
 
             <TextView
-                android:id="@+id/dot1"
+                android:id="@+id/vlsmDot1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -58,8 +57,8 @@
                 android:visibility="visible" />
 
             <EditText
-                android:textSize="20dp"
-                android:id="@+id/octet2"
+                android:textSize="20sp"
+                android:id="@+id/vlsmOctet2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -71,7 +70,7 @@
                 android:maxLength="3" />
 
             <TextView
-                android:id="@+id/dot2"
+                android:id="@+id/vlsmDot2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -79,8 +78,8 @@
                 android:text="@string/dot" />
 
             <EditText
-                android:textSize="20dp"
-                android:id="@+id/octet3"
+                android:textSize="20sp"
+                android:id="@+id/vlsmOctet3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -92,7 +91,7 @@
                 android:maxLength="3" />
 
             <TextView
-                android:id="@+id/dot3"
+                android:id="@+id/vlsmDot3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -100,8 +99,8 @@
                 android:text="@string/dot" />
 
             <EditText
-                android:textSize="20dp"
-                android:id="@+id/octet4"
+                android:textSize="20sp"
+                android:id="@+id/vlsmOctet4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -113,7 +112,7 @@
                 android:maxLength="3" />
 
             <TextView
-                android:id="@+id/dot4"
+                android:id="@+id/vlsmSlash"
                 android:layout_width="5sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -121,8 +120,8 @@
                 android:text="@string/slash" />
 
             <EditText
-                android:textSize="20dp"
-                android:id="@+id/prefix"
+                android:textSize="20sp"
+                android:id="@+id/vlsmPrefix"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -132,10 +131,32 @@
                 android:importantForAutofill="no"
                 android:inputType="number"
                 android:maxLength="2" />
+
+            <TextView
+                android:layout_marginStart="10dp"
+                android:id="@+id/tvSubnetCount"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:baselineAligned="false"
+                android:text="@string/hostst" />
+
+            <EditText
+                android:textSize="20sp"
+                android:id="@+id/subnetCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:baselineAligned="false"
+                android:ems="1"
+                android:hint="@string/subnetHint"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLength="2" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/subnetCalculate"
+            android:id="@+id/vlsmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/calculate" />
@@ -147,48 +168,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.29" />
+        app:layout_constraintGuide_percent="0.3" />
 
-    <TextView
-        android:id="@+id/ipSpecs1"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="15sp"
-        android:visibility="invisible"
-        android:text="@string/ipSpecs"
+        android:clipChildren="true"
+        android:isScrollContainer="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
-
-    <TextView
-        android:id="@+id/ipSpecs2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:visibility="invisible"
-        android:text="@string/ipSpecs"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipSpecs1" />
-
-    <TextView
-        android:id="@+id/recItemOutput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/ipSpecs1"
-        app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
-
-    <TextView
-        android:id="@+id/bitOutput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/ipSpecs2"
-        app:layout_constraintTop_toBottomOf="@+id/recItemOutput" />
+        app:layout_constraintTop_toBottomOf="@+id/subnetLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

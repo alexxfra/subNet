@@ -4,6 +4,7 @@
     <string name="subnetCalc">Subnet Calculator</string>
     <string name="vlsmCalc">VLSM Calculator</string>
     <string name="maskConv">Mask Converter</string>
+
     <string name="subnetIcon">subnetIcon</string>
     <string name="Title">SUBNET CONFIGURATOR</string>
     <string name="savedConfg">Saved Configuration</string>
@@ -17,9 +18,18 @@
     <string name="ip4Address">IPv4 network address</string>
     <string name="trash">Empty</string>
     <string name="calculate">Calculate</string>
+    <string name="ipSpecs">Network: \nSubnet: \nFirst host: \nLast host: \nBroadcast: </string>
+
     <string name="networkConfiguration">Network Configuration</string>
     <string name="amountNetwork">Enter the amount of networks:</string>
     <string name="apply">Apply</string>]
+
     <string name="maskPlaceholder">/1&#8211;31</string>
     <string name="maskPrefix">/%1$s</string>
+    <string name="maskSpecsDec">Subnet: \nWildcard: \nHosts: </string>
+    <string name="maskSpecsBin">Subnet: \nWildcard: </string>
+
+    <string name="hostst">Subnets: </string>
+    <string name="subnetHint">5</string>
+    <string name="vlsmSpecs">Network: \nHost Range: \nBroadcast: \nUsed addresses: </string>
 </resources>

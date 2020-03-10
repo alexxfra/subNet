@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,13 +24,6 @@ public class SubnetMaskActivity extends AppCompatActivity {
     private SeekBar seekBar;
     ActionBar actionBar;
     private Network n;
-
-    private String specs1 =     "Subnet mask: " + "\n" +
-                                "Wildcard mask: " + "\n" +
-                                "Available hosts: ";
-
-    private String specs2 =     "Subnet mask: " + "\n" +
-                                "Wildcard mask: ";
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -72,8 +66,8 @@ public class SubnetMaskActivity extends AppCompatActivity {
                 textView.setText(getApplicationContext().getString(R.string.maskPrefix, Integer.toString(progress)));
 
                 n.updateMask(progress);
-                decSpecs.setText(specs1);
-                binSpecs.setText(specs2);
+                decSpecs.setVisibility(View.VISIBLE);
+                binSpecs.setVisibility(View.VISIBLE);
 
                 mask.setText(n.getMaskDecimal());
                 decOut.setText(n.getMaskInfo());

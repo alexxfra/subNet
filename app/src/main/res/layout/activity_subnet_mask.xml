@@ -55,6 +55,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:textSize="14sp"
+        android:visibility="invisible"
+        android:text="@string/maskSpecsDec"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maskSeeker" />
 
@@ -85,6 +87,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
+        android:text="@string/maskSpecsBin"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/specs1" />
 

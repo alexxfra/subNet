@@ -25,13 +25,7 @@ public class SubnetCalcActivity extends AppCompatActivity {
     private Button calculate;
     private TextView specs1, specs2, decOut, bitOut;
     private EditText oct1, oct2, oct3, oct4, pref;
-    private Network n;
-    private Context context;
-    private String specs =  "Network: " + "\n" +
-                            "Subnet: " + "\n" +
-                            "First host: " + "\n" +
-                            "Last host: " + "\n" +
-                            "Broadcast: ";
+    private Network n = new Network();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +38,9 @@ public class SubnetCalcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subnet_calc);
 
-         context = this;
-         n = new Network();
          specs1 = findViewById(R.id.ipSpecs1);
          specs2 = findViewById(R.id.ipSpecs2);
-         decOut = findViewById(R.id.decimalOutput);
+         decOut = findViewById(R.id.recItemOutput);
          bitOut = findViewById(R.id.bitOutput);
 
          oct1 = findViewById(R.id.octet1);
@@ -80,22 +72,23 @@ public class SubnetCalcActivity extends AppCompatActivity {
                 catch (Exception e){
                     Log.d("EXCEPTION", "onClick: ZLE UDAJE KOKOT");
                     clearedChecks = false;
-                    Toast.makeText(context,"Fields can not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(),"Fields can not be empty", Toast.LENGTH_SHORT).show();
 
                 }
 
-                if(clearedChecks){
-                    if ((prefix > 0 && prefix < 32) && ((address[0] > -1 && address[0] < 256) && (address[1] > -1 && address[1] < 256) && (address[2] > -1 && address[2] < 256) && (address[3] > -1 && address[3] < 256))){
-                        specs1.setText(specs);
-                        specs2.setText(specs);
-                        n.setNetwork(address,prefix);
-                        decOut.setText(n.toDecimals());
-                        bitOut.setText(n.toBits());
-                    }
-                    else{
-                        Toast.makeText(context,"Incorrect format", Toast.LENGTH_SHORT).show();
-                    }
+
+                if (clearedChecks && (prefix > 0 && prefix < 32) && ((address[0] > -1 && address[0] < 256) && (address[1] > -1 && address[1] < 256) && (address[2] > -1 && address[2] < 256) && (address[3] > -1 && address[3] < 256))){
+                    specs1.setVisibility(View.VISIBLE);
+                    specs2.setVisibility(View.VISIBLE);
+
+                    n.setNetwork(address,prefix);
+                    decOut.setText(n.toDecimals());
+                    bitOut.setText(n.toBits());
                 }
+                else{
+                    Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

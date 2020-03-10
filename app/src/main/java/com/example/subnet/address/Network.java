@@ -22,6 +22,31 @@ public class Network {
         setNetwork(input, prefix);
     }
 
+    public Network(long input, int prefix){
+        this.prefix = prefix;
+
+        this.hostInput = input;
+
+        StringBuilder sb = new StringBuilder();
+        while(sb.length() < prefix){
+            sb.append("1");
+        }
+        this.mask = Long.parseLong(sb.toString(),2)<<(32-prefix);
+
+        sb.delete(0, sb.length());
+        while(sb.length() < 32){
+            if(sb.length() < prefix)
+                sb.append("0");
+            else
+                sb.append("1");
+        }
+        this.wildcard = Long.parseLong(sb.toString(),2);
+
+        this.network = this.hostInput & this.mask;
+
+        this.broadcast = this.hostInput | this.wildcard;
+    }
+
     public void setNetwork(long[] input, int prefix){
         this.prefix = prefix;
 
@@ -44,7 +69,7 @@ public class Network {
 
         this.network = this.hostInput & this.mask;
 
-        this.broadcast = this.network + this.wildcard;
+        this.broadcast = this.hostInput | this.wildcard;
     }
 
     public void updateMask(int prefix){
@@ -75,7 +100,7 @@ public class Network {
      * Printing functions
      * @return
      */
-
+    //SUBENT CALC ACTIVITY
     public String toBits(){
         return  formatIpBits(this.network) + "\n" +
                 formatIpBits(this.mask) + "\n" +
@@ -92,6 +117,7 @@ public class Network {
                 formatIpDecimals(this.broadcast);
     }
 
+    // SUBNET MASK ACTIVITY
     public String getMaskInfo(){
         return  formatIpDecimals(this.mask) + "\n" +
                 formatIpDecimals(this.wildcard) + "\n" +
@@ -103,6 +129,14 @@ public class Network {
                 formatIpBits(this.wildcard);
     }
 
+    //VLSM ACTIVITY
+    public String getVlsmInfo(){
+        return  formatIpDecimals(this.network) + "\n" +
+                formatIpDecimals(this.network+1) + " - " +
+                formatIpDecimals(this.broadcast-1) + "\n" +
+                formatIpDecimals(this.broadcast) + "\n" +
+                (int)Math.pow(2,32-prefix);
+    }
     /**
      *Formatting IP addresss
      * @return
@@ -138,6 +172,9 @@ public class Network {
         return formatIpDecimals(this.mask);
     }
 
+    public long getBroadcast(){
+        return this.broadcast;
+    }
 
 
 }

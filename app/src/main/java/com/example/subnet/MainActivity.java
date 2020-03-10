@@ -15,14 +15,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    //pref variables
     private static final String PREFNAME = "preferences";
     private static final String THEME = "dark_theme";
 
+    //view variables
     private ActionBar homeBar;
     private Button one,two,three,four,five;
 
-
+    /**
+     * On each onCreate we will initiailze View elements and load our Theme from shared preferences. If we do something else it will be documented.
+     * In this case we also set click listeners for each button.
+     * @param savedInstanceState default parameter
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
@@ -48,10 +53,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         four = findViewById(R.id.buttonSettings);
         four.setOnClickListener(this);
-
-
     }
 
+    /**
+     * Inflates menu with our info button.
+     * @param menu default parameter
+     * @return returns true after inflating
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -59,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    /**
+     * Opens dialog when the info menu button is pressed.
+     * @param item default parameter
+     * @return  returns true if clicked on our icon otherwise calls super
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
@@ -70,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Designs the dialog we want to display when the info menu icon is clicked.
+     */
     public void Dialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("This app is meant for network Administrators\nAs well as network" +
@@ -85,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
+    /**
+     * This function is used to handle clicks on menu buttons and decides which activity should be opened on click.
+     * @param v default parameter
+     */
     @Override
     public void onClick(View v) {
         TextView tv = findViewById(R.id.textViewTitle);
@@ -94,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                startActivity(subnetCalc);
                break;
             case R.id.buttonVlsmCalc:
-                // Intent vlsmCalc = new Intent(this, vlsmCalc.class);
-                //startActivity(vlsmCalc);
+                Intent vlsmCalc = new Intent(this, VlsmActivity.class);
+                startActivity(vlsmCalc);
                 break;
             case R.id.buttonMaskConv:
                 Intent maskConv = new Intent(this, SubnetMaskActivity.class);
