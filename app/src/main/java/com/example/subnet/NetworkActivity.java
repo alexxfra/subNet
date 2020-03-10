@@ -3,7 +3,6 @@ package com.example.subnet;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,17 +15,28 @@ import android.widget.Toast;
 
 import com.example.subnet.address.Network;
 
-public class SubnetCalcActivity extends AppCompatActivity {
-
+/**
+ * @author Alex,Daniel
+ * @version 1.0
+ */
+public class NetworkActivity extends AppCompatActivity {
+    //pref variables
     private static final String PREFNAME = "preferences";
     private static final String THEME = "dark_theme";
 
+    //view variables
     private ActionBar subnetBar;
     private Button calculate;
-    private TextView specs1, specs2, decOut, bitOut;
-    private EditText oct1, oct2, oct3, oct4, pref;
+    private TextView decimalSpecifications, binarySpecifications, decimalOutput, binaryOutput;
+    private EditText octet1, octet2, octet3, octet4, pref;
+
+    // Making an instance of Network for subnetting capabilities
     private Network n = new Network();
 
+    /**
+     * Loading our Theme and instantiating views.
+     * @param savedInstanceState default parameter
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
@@ -38,15 +48,15 @@ public class SubnetCalcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subnet_calc);
 
-         specs1 = findViewById(R.id.ipSpecs1);
-         specs2 = findViewById(R.id.ipSpecs2);
-         decOut = findViewById(R.id.recItemOutput);
-         bitOut = findViewById(R.id.bitOutput);
+         decimalSpecifications = findViewById(R.id.networkDecSpec);
+         binarySpecifications = findViewById(R.id.networkBinSpec);
+         decimalOutput = findViewById(R.id.networkDecOut);
+         binaryOutput = findViewById(R.id.networkBinOut);
 
-         oct1 = findViewById(R.id.octet1);
-         oct2 = findViewById(R.id.octet2);
-         oct3 = findViewById(R.id.octet3);
-         oct4 = findViewById(R.id.octet4);
+         octet1 = findViewById(R.id.networkOct1);
+         octet2 = findViewById(R.id.octet2);
+         octet3 = findViewById(R.id.octet3);
+         octet4 = findViewById(R.id.octet4);
          pref = findViewById(R.id.prefix);
 
 
@@ -63,7 +73,7 @@ public class SubnetCalcActivity extends AppCompatActivity {
                 boolean clearedChecks = true;
                 int prefix = 0;
                 long[] address = new long[4];
-                String strAddress = oct1.getText().toString() + " " + oct2.getText().toString() + " " + oct3.getText().toString() + " " + oct4.getText().toString();
+                String strAddress = octet1.getText().toString() + " " + octet2.getText().toString() + " " + octet3.getText().toString() + " " + octet4.getText().toString();
 
                 try {
                     prefix = Integer.parseInt(pref.getText().toString());
@@ -78,12 +88,12 @@ public class SubnetCalcActivity extends AppCompatActivity {
 
 
                 if (clearedChecks && (prefix > 0 && prefix < 32) && ((address[0] > -1 && address[0] < 256) && (address[1] > -1 && address[1] < 256) && (address[2] > -1 && address[2] < 256) && (address[3] > -1 && address[3] < 256))){
-                    specs1.setVisibility(View.VISIBLE);
-                    specs2.setVisibility(View.VISIBLE);
+                    decimalSpecifications.setVisibility(View.VISIBLE);
+                    binarySpecifications.setVisibility(View.VISIBLE);
 
                     n.setNetwork(address,prefix);
-                    decOut.setText(n.toDecimals());
-                    bitOut.setText(n.toBits());
+                    decimalOutput.setText(n.toDecimals());
+                    binaryOutput.setText(n.toBits());
                 }
                 else{
                     Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();

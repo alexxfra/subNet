@@ -55,7 +55,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             holderStats = itemView.findViewById(R.id.recItemStats);
-            holderOutput = itemView.findViewById(R.id.recItemOutput);
+            holderOutput = itemView.findViewById(R.id.recDecOut);
         }
     }
 

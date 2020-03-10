@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SubnetCalcActivity">
+    tools:context=".NetworkActivity">
 
     <LinearLayout
         android:id="@+id/subnetLayout"
@@ -36,7 +36,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/octet1"
+                android:id="@+id/networkOct1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -150,7 +150,7 @@
         app:layout_constraintGuide_percent="0.29" />
 
     <TextView
-        android:id="@+id/ipSpecs1"
+        android:id="@+id/networkDecSpec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -161,7 +161,7 @@
         app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
 
     <TextView
-        android:id="@+id/ipSpecs2"
+        android:id="@+id/networkBinSpec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -170,25 +170,25 @@
         android:visibility="invisible"
         android:text="@string/ipSpecs"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipSpecs1" />
+        app:layout_constraintTop_toBottomOf="@+id/networkDecSpec" />
 
     <TextView
-        android:id="@+id/recItemOutput"
+        android:id="@+id/networkDecOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/ipSpecs1"
+        app:layout_constraintStart_toEndOf="@+id/networkDecSpec"
         app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
 
     <TextView
-        android:id="@+id/bitOutput"
+        android:id="@+id/networkBinOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/ipSpecs2"
-        app:layout_constraintTop_toBottomOf="@+id/recItemOutput" />
+        app:layout_constraintStart_toEndOf="@+id/networkBinSpec"
+        app:layout_constraintTop_toBottomOf="@+id/networkDecOut" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

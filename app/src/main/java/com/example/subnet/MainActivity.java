@@ -14,6 +14,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Daniel
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //pref variables
     private static final String PREFNAME = "preferences";
@@ -110,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tv = findViewById(R.id.textViewTitle);
         switch (v.getId()) {
             case R.id.buttonSubnetCalc:
-               Intent subnetCalc = new Intent(this, SubnetCalcActivity.class);
+               Intent subnetCalc = new Intent(this, NetworkActivity.class);
                startActivity(subnetCalc);
                break;
             case R.id.buttonVlsmCalc:
