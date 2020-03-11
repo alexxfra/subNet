@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ public class HostDialog extends AppCompatDialogFragment{
             tv.setText("Enter network size");
             populateMe.addView(tv);
             EditText editText = new EditText(view.getContext());
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editTexts.add(editText);
             populateMe.addView(editText);
         }

@@ -74,17 +74,29 @@ public class NetworkActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
+                If the input is correct we will make the specifications visible and we will create the network according to those specifications.
+                Afterwards the info of the network is displayed in a textview
+                 */
                 if (validateInput()){
                     decimalSpecifications.setVisibility(View.VISIBLE);
                     binarySpecifications.setVisibility(View.VISIBLE);
 
-                    //n.setNetwork(address,prefix);
+                    long addressIn = n.stringToLong(octet1.getText().toString() + "." + octet2.getText().toString() + "." + octet3.getText().toString() + "." + octet4.getText().toString());
+                    int prefixIn = Integer.parseInt(prefix.getText().toString());
+                    n.setNetwork(addressIn,prefixIn);
                     decimalOutput.setText(n.toNetworkDecimal());
                     binaryOutput.setText(n.toNetworkBinary());
                 }
             }
         });
     }
+
+    /**
+     * Inflates the menu
+     * @param menu default parameter
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -92,22 +104,16 @@ public class NetworkActivity extends AppCompatActivity {
         return true;
     }
 
-    public long[] inputToLongArray(String input){
-        String[] strInput = input.split(" ");
-
-        long[] LInput = new long[4];
-
-        for(int i = 0; i < 4; i++){
-            LInput[i] = Long.parseLong(strInput[i]);
-        }
-        return LInput;
-    }
-
+    /**
+     * This function validates the input of the ip address.
+     * If the input is not empty and the numbers are in the correct range (8bit number and prefix from 1-31) returns true otherwise false.
+     * @return true or false depending on vaidation success
+     */
     public boolean validateInput(){
         //This try/catch will thrown an exception if input is empty.
         try {
             String[] userInput = {octet1.getText().toString(),octet2.getText().toString(),octet3.getText().toString(),octet4.getText().toString(),prefix.getText().toString()};
-            long[] longUserInput = {Integer.parseInt(userInput[0]),Integer.parseInt(userInput[1]),Integer.parseInt(userInput[2]),Integer.parseInt(userInput[3]),Integer.parseInt(userInput[4])};
+            long[] longUserInput = {Long.parseLong(userInput[0]),Long.parseLong(userInput[1]),Long.parseLong(userInput[2]),Long.parseLong(userInput[3]),Long.parseLong(userInput[4])};
 
             //long if to check if every field is empty has the correct format.
             if((longUserInput[0] > 0 && longUserInput[0] < 256) && (longUserInput[1] > 0 && longUserInput[1] < 256) && (longUserInput[2] > 0 && longUserInput[2] < 256) && (longUserInput[3] > 0 && longUserInput[3] < 256) && (longUserInput[4] > 0 && longUserInput[4] < 32)){
@@ -117,7 +123,6 @@ public class NetworkActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
                 return false;
             }
-
         }
         catch (Exception e){
             Toast.makeText(getBaseContext(),"Fields can't be empty", Toast.LENGTH_SHORT).show();

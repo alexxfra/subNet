@@ -5,15 +5,34 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @author Alex
+ * @version 1.0
+ *
+ * Vlsm uses networks to form a Subnet configuration consisting of more subnetworks.
+ * It utilizes a list of networks which are taking the role of a subnetwork.
+ */
 public class Vlsm {
+    //pref variables
     private static final String TAG = "Vlsm";
     private ArrayList<Network> networks;
+    private Network net;
 
+    /**
+     * Basic constructor. When creating an instance of Vlsm we only need to instantiate our Arraylist and Network
+     * We use Network to acces it's functions
+     */
     public Vlsm(){
         networks = new ArrayList<>();
+        net = new Network();
     }
 
-    public void makeSubnets(long net, int[] hosts){
+    /**
+     *
+     * @param network network ipv4 address
+     * @param hosts array of numbers of hosts in a network
+     */
+    public void makeSubnets(long network, int[] hosts){
 
         networks.clear();
 
@@ -21,7 +40,7 @@ public class Vlsm {
         sortHosts(hosts);
 
         Log.d(TAG, "makeSubnets: ADDING FIRST");
-        networks.add(new Network(net, prefixFromHosts(hosts[0])));
+        networks.add(new Network(network, prefixFromHosts(hosts[0])));
 
         if (hosts.length > 1)
             for (int i = 1; i < hosts.length; i++){

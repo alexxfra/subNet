@@ -15,16 +15,22 @@ import android.widget.TextView;
 import com.example.subnet.address.Network;
 
 public class SubnetMaskActivity extends AppCompatActivity {
-
+    //pref vairables
     private static final String PREFNAME = "preferences";
     private static final String THEME = "dark_theme";
 
+    //view variables
     private TextView textView, mask, decSpecs, decOut, binSpecs, binOut;
     private SeekBar seekBar;
     ActionBar actionBar;
-    private Network n;
 
+    //Network used to display info
+    private Network n = new Network();
 
+    /**
+     *  views and prefs as always, additionally we are setting up a listener for the seeker to control the changes of the prefix
+     * @param savedInstanceState default parameters
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +42,6 @@ public class SubnetMaskActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subnet_mask);
-
-
-
-        n = new Network();
 
         textView = findViewById(R.id.networkPrefix);
         mask = findViewById(R.id.subnetMask);
@@ -59,6 +61,10 @@ public class SubnetMaskActivity extends AppCompatActivity {
         actionBar.setTitle("Subnet Mask List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /*
+         We are updating our network with a different subnet mask on every change.
+         We use updateMask function and then get string iformation with toMask...
+         */
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -85,6 +91,11 @@ public class SubnetMaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * inflates our menu
+     * @param menu default parameter
+     * @return true
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.generalbar, menu);

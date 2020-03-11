@@ -20,23 +20,21 @@ import java.util.ArrayList;
 
 public class VlsmActivity extends AppCompatActivity implements HostDialog.dialogListener{
 
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
+    //log tag
     private static final String TAG = "VlsmActivity";
 
-    private ArrayList<Integer> test = new ArrayList<>();
+    //pref variables
+    private static final String PREFNAME = "preferences";
+    private static final String THEME = "dark_theme";
 
+    //view variables
+    private Button btn;
+    private EditText octet1, octet2, octet3, octet4, prefix, subnetCount;
+
+    //defining vlsm, network, and instantiating our ArrayList
     private ArrayList<Network> networks = new ArrayList<>();
     private Vlsm vlsm = new Vlsm();
-
-    private RecyclerView rv;
-    private RecyclerAdapter rva;
-
-    //private RecyclerView rv;
-    //private RecyclerAdapter ra;
-
-    private Button btn;
-    private EditText oct1, oct2, oct3, oct4, inpPrefix, subnetCount;
+    private Network net = new Network();
 
 
     @Override
@@ -50,53 +48,25 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vlsm);
 
-        oct1 = findViewById(R.id.vlsmOctet1);
-        oct2 = findViewById(R.id.vlsmOctet2);
-        oct3 = findViewById(R.id.vlsmOctet3);
-        oct4 = findViewById(R.id.vlsmOctet4);
-        inpPrefix = findViewById(R.id.vlsmPrefix);
-        subnetCount = findViewById(R.id.subnetCount);
-
-
+        octet1 = findViewById(R.id.vlsmOctet1);
+        octet2 = findViewById(R.id.vlsmOctet2);
+        octet3 = findViewById(R.id.vlsmOctet3);
+        octet4 = findViewById(R.id.vlsmOctet4);
+        prefix = findViewById(R.id.vlsmPrefix);
         subnetCount = findViewById(R.id.subnetCount);
         btn = findViewById(R.id.vlsmButton);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateInput()){
+                    int subnetNumber = Integer.parseInt(subnetCount.getText().toString());
 
-                boolean clearedChecks = true;
-                int prefix = 0;
-                int subnetNumber = 0;
-                long[] address = new long[4];
-                String strAddress = oct1.getText().toString() + " " + oct2.getText().toString() + " " + oct3.getText().toString() + " " + oct4.getText().toString();
-
-                try {
-                    prefix = Integer.parseInt(inpPrefix.getText().toString());
-                    address = inputToLongArray(strAddress);
-                    subnetNumber = Integer.parseInt(subnetCount.getText().toString());
-                }
-                catch (Exception e){
-                    Log.d("EXCEPTION", "onClick: ZLE UDAJE KOKOT");
-                    clearedChecks = false;
-                    Toast.makeText(getBaseContext(), "Fields can not be empty", Toast.LENGTH_SHORT).show();
-                }
-
-                if (clearedChecks && (prefix > 0 && prefix < 32) && ((address[0] > -1 && address[0] < 256) && (address[1] > -1 && address[1] < 256) && (address[2] > -1 && address[2] < 256) && (address[3] > -1 && address[3] < 256))){
-                    //Bundle
-                    if(subnetNumber <= Math.pow(2,32-prefix)/4) {
-                        HostDialog dialog = new HostDialog();
-                        Bundle args = new Bundle();
-                        args.putInt("num", subnetNumber);
-                        dialog.setArguments(args);
-                        dialog.show(getSupportFragmentManager(), "NetworkTry");
-                    }
-                    else{
-                        Toast.makeText(getBaseContext(), "Number of networks is too large", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
+                    HostDialog dialog = new HostDialog();
+                    Bundle args = new Bundle();
+                    args.putInt("num", subnetNumber);
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(), "NetworkTry");
                 }
             }
         });
@@ -104,26 +74,15 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
 
     private void initializeRec() {
         RecyclerView rv = findViewById(R.id.recycler);
-        RecyclerAdapter rva = new RecyclerAdapter(this, this.networks);
+        RecyclerAdapter rva = new RecyclerAdapter(this.networks);
         rv.setAdapter(rva);
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public long[] inputToLongArray(String input){
-        String[] strInput = input.split(" ");
-
-        long[] LInput = new long[4];
-
-        for(int i = 0; i < 4; i++){
-            LInput[i] = Long.parseLong(strInput[i]);
-        }
-        return LInput;
-    }
-
     @Override
     public void applyHosts(ArrayList<Integer> networkSize){
-        int prefix = Integer.parseInt(inpPrefix.getText().toString());
-        String[] strArr = new String[]{oct1.getText().toString(), oct2.getText().toString(), oct3.getText().toString(), oct4.getText().toString()};
+        int prefix = Integer.parseInt(this.prefix.getText().toString());
+        String[] strArr = new String[]{octet1.getText().toString(), octet2.getText().toString(), octet3.getText().toString(), octet4.getText().toString()};
         long[] longInput= new long[]{Long.parseLong(strArr[0]), Long.parseLong(strArr[1]), Long.parseLong(strArr[2]), Long.parseLong(strArr[3])};
         long longNetwork = longArrToLong(longInput) & vlsm.maskFromPrefix(prefix);
 
@@ -147,6 +106,37 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
 
     public long longArrToLong(long[] input){
         return ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]);
+    }
+
+    /**
+     * This function validates the input of the ip address.
+     * If the input is not empty, the numbers are in the correct range (8bit number and prefix from 1-31) and the amount of subnets is correct it returns true otherwise false.
+     * @return true or false depending on vaidation success
+     */
+    public boolean validateInput(){
+        //This try/catch will thrown an exception if input is empty.
+        try {
+            /*
+            0-3 -> octet 1-4
+            4 -> prefix
+            5 -> subnetCount
+             */
+            String[] userInput = {octet1.getText().toString(),octet2.getText().toString(),octet3.getText().toString(),octet4.getText().toString(),prefix.getText().toString(),subnetCount.getText().toString()};
+            long[] longUserInput = {Long.parseLong(userInput[0]),Long.parseLong(userInput[1]),Long.parseLong(userInput[2]),Long.parseLong(userInput[3]),Long.parseLong(userInput[4]),Long.parseLong(userInput[5])};
+
+            //long if to check if every field is empty has the correct format.
+            if((longUserInput[0] > 0 && longUserInput[0] < 256) && (longUserInput[1] > 0 && longUserInput[1] < 256) && (longUserInput[2] > 0 && longUserInput[2] < 256) && (longUserInput[3] > 0 && longUserInput[3] < 256) && (longUserInput[4] > 0 && longUserInput[4] < 32) && (longUserInput[5] <= Math.pow(2,32-longUserInput[4])/4)){
+                return true;
+            }
+            else{
+                Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(getBaseContext(),"Fields can't be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
 }

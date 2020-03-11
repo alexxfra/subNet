@@ -13,18 +13,22 @@ import com.example.subnet.address.Network;
 
 import java.util.List;
 
+/**
+ * @author Alex,Daniel
+ * @version 1.0
+ *
+ * A basic RecyclerViewAdapter used by our VlsmActivity to display Networks
+ */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
-
+    // log TAG
     private static final String TAG = "RecyclerAdapter";
 
+    //List of Networks to display
     private List<Network> mDataset;
-    private Context mContext;
 
 
-    public RecyclerAdapter(Context Context,List<Network> mDataSet){
-        this.mContext = Context;
+    public RecyclerAdapter(List<Network> mDataSet){
         this.mDataset = mDataSet;
-
     }
 
     @NonNull
@@ -35,6 +39,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return holder;
     }
 
+    /**
+     * We are using the information of a network to set the output text of an element in a recyclerView
+     * @param holder default parameter
+     * @param position default parameter
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         Network net = mDataset.get(position);

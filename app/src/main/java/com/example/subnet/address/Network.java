@@ -5,9 +5,11 @@ import java.util.Random;
 /**
  * @author Alex
  * @version 1.0
+ *
+ * Our basic class. Contains all useful information about a Network.
  */
 public class Network {
-    //
+    //network variables
     private long hostInput;
     private long mask;
     private long wildcard;
@@ -15,13 +17,29 @@ public class Network {
     private long broadcast;
     private int prefix;
 
+    /**
+     * Network with dummy parameters
+     */
     public Network(){
-        setNetwork(new long[] {192L,168L,10L,1L}, 24);
+        setNetwork(longArrayToLong(new long[] {192L,168L,10L,1L}), 24);
     }
 
+    /**
+     * Create a network with specified parameters
+     * @param input host IP
+     * @param prefix prefix of network
+     */
     public Network(long input, int prefix){
-        this.prefix = prefix;
+        setNetwork(input, prefix);
+    }
 
+    /**
+     * Set net network parameters
+     * @param input input host ip
+     * @param prefix prefix of network
+     */
+    public void setNetwork(long input, int prefix){
+        this.prefix = prefix;
         this.hostInput = input;
 
         StringBuilder sb = new StringBuilder();
@@ -38,37 +56,14 @@ public class Network {
                 sb.append("1");
         }
         this.wildcard = Long.parseLong(sb.toString(),2);
-
         this.network = this.hostInput & this.mask;
-
         this.broadcast = this.hostInput | this.wildcard;
     }
 
-    public void setNetwork(long[] input, int prefix){
-        this.prefix = prefix;
-
-        this.hostInput = ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]);
-
-        StringBuilder sb = new StringBuilder();
-        while(sb.length() < prefix){
-            sb.append("1");
-        }
-        this.mask = Long.parseLong(sb.toString(),2)<<(32-prefix);
-
-        sb.delete(0, sb.length());
-        while(sb.length() < 32){
-            if(sb.length() < prefix)
-                sb.append("0");
-            else
-                sb.append("1");
-        }
-        this.wildcard = Long.parseLong(sb.toString(),2);
-
-        this.network = this.hostInput & this.mask;
-
-        this.broadcast = this.hostInput | this.wildcard;
-    }
-
+    /**
+     * updates the network variables to match the new subnet mask
+     * @param prefix new prefix for the network
+     */
     public void updateMask(int prefix){
         this.prefix = prefix;
 
@@ -85,14 +80,12 @@ public class Network {
             else
                 sb.append("1");
         }
+
         this.wildcard = Long.parseLong(sb.toString(),2);
-
         this.network = this.hostInput & this.mask;
-
         this.broadcast = this.network + this.wildcard;
 
     }
-
 
     /**
      * Returns a decimal string which is then displayed in NetworkActivity
@@ -190,8 +183,8 @@ public class Network {
     }
 
     /**
-     *
-     * @return decimal format
+     * Retruns the subnet mask in decimal format
+     * @return decimal format of subnet mask
      */
     public String formatMaskToDecimal(){
         return formatLongToDecimal(this.mask);
@@ -203,6 +196,31 @@ public class Network {
      */
     public long getBroadcast(){
         return this.broadcast;
+    }
+
+    /**
+     * Changes the format of the ip from an array to a long
+     * @param input ip in long array format
+     * @return ip in long format
+     */
+    public long longArrayToLong(long[] input){
+        return ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]);
+    }
+
+    /**
+     * changes the format of the ip from String to long
+     * @param input String of ip
+     * @return ip in long format
+     */
+    public long stringToLong(String input){
+        String[] strInput = input.split("\\. ");
+
+        long[] LInput = new long[4];
+
+        for(int i = 0; i < 4; i++){
+            LInput[i] = Long.parseLong(strInput[i]);
+        }
+        return longArrayToLong(LInput);
     }
 
 
