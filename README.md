@@ -21,5 +21,5 @@ It also has a mask converter which shows details about all subnet masks.
 # Installation guide
 To install our app you need to import it to Android Studio and build it. Afterwards you need to enable apps from unknown sources on your phone.
 
-Alternatively download the app from here https://drive.google.com/open?id=1Qjrth87Aar8RNV58U5g1Ly4WeomAL1rn
+Alternatively download the app from here https://drive.google.com/open?id=1Ajaw9M92KT_j8ggPHIPxMIZSs8hlXsfp
 
