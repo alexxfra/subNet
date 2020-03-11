@@ -121,6 +121,7 @@ public class NetworkActivity extends AppCompatActivity {
         }
     }
 
+
     public void updateTheme(){
         if (Loader.getInstance(this).getTheme())
             setTheme(R.style.AppTheme_Dark);

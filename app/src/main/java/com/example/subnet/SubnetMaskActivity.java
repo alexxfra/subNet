@@ -23,7 +23,7 @@ import com.example.subnet.singleton.Loader;
  */
 public class SubnetMaskActivity extends AppCompatActivity {
     //view variables
-    private TextView textView, mask, decSpecs, decOut, binSpecs, binOut;
+    private TextView prefixText, maskText, decimalSpecifications, decimalOutput, binarySpecifications, binaryOutput;
     private SeekBar seekBar;
     ActionBar actionBar;
 
@@ -41,14 +41,14 @@ public class SubnetMaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subnet_mask);
 
-        textView = findViewById(R.id.networkPrefix);
-        mask = findViewById(R.id.subnetMask);
+        prefixText = findViewById(R.id.networkPrefix);
+        maskText = findViewById(R.id.subnetMask);
         seekBar = findViewById(R.id.maskSeeker);
 
-        decSpecs = findViewById(R.id.specs1);
-        decOut = findViewById(R.id.decOutput);
-        binSpecs = findViewById(R.id.specs2);
-        binOut = findViewById(R.id.binOutput);
+        decimalSpecifications = findViewById(R.id.specs1);
+        decimalOutput = findViewById(R.id.decOutput);
+        binarySpecifications = findViewById(R.id.specs2);
+        binaryOutput = findViewById(R.id.binOutput);
 
         seekBar.setProgress(24);
         seekBar.setMin(1);
@@ -66,15 +66,15 @@ public class SubnetMaskActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textView.setText(getApplicationContext().getString(R.string.maskPrefix, Integer.toString(progress)));
+                prefixText.setText(getApplicationContext().getString(R.string.maskPrefix, Integer.toString(progress)));
 
                 n.updateMask(progress);
-                decSpecs.setVisibility(View.VISIBLE);
-                binSpecs.setVisibility(View.VISIBLE);
+                decimalSpecifications.setVisibility(View.VISIBLE);
+                binarySpecifications.setVisibility(View.VISIBLE);
 
-                mask.setText(n.formatMaskToDecimal());
-                decOut.setText(n.toMaskDecimal());
-                binOut.setText(n.toMaskBinary());
+                maskText.setText(n.formatMaskToDecimal());
+                decimalOutput.setText(n.toMaskDecimal());
+                binaryOutput.setText(n.toMaskBinary());
             }
 
             @Override
