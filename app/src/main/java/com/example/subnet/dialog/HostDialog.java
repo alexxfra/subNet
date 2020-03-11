@@ -22,6 +22,12 @@ import com.example.subnet.R;
 
 import java.util.ArrayList;
 
+/**
+ * @author Daniel
+ * @version 1.0
+ *
+ * This class is used to create our dialog and manages the inflation of the dialog with needed views.
+ */
 public class HostDialog extends AppCompatDialogFragment{
     private dialogListener listener;
     ArrayList<EditText> editTexts = new ArrayList<>();

@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,12 +12,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.subnet.address.Network;
+import com.example.subnet.singleton.Loader;
 
+/**
+ * @author Xiao,Alex
+ * @version 1.0
+ *
+ * Activity is used to display all available subnet masks.
+ * It displays the prefix, subnet mask, wildcard mask, number of hosts.
+ */
 public class SubnetMaskActivity extends AppCompatActivity {
-    //pref vairables
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
-
     //view variables
     private TextView textView, mask, decSpecs, decOut, binSpecs, binOut;
     private SeekBar seekBar;
@@ -34,12 +37,7 @@ public class SubnetMaskActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-        if (sp.getBoolean(THEME,false))
-            setTheme(R.style.AppTheme_Dark);
-        else
-            setTheme(R.style.AppTheme);
-
+        updateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subnet_mask);
 
@@ -100,5 +98,12 @@ public class SubnetMaskActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.generalbar, menu);
         return true;
+    }
+
+    public void updateTheme(){
+        if (Loader.getInstance(this).getTheme())
+            setTheme(R.style.AppTheme_Dark);
+        else
+            setTheme(R.style.AppTheme);
     }
 }

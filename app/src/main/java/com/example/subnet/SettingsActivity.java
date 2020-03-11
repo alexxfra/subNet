@@ -3,28 +3,26 @@ package com.example.subnet;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.TextView;
 
+import com.example.subnet.singleton.Loader;
+
+/**
+ * @author Xiao,Alex
+ * @version 1.0
+ *
+ * Settings activity is used to manage the theme of our app
+ */
 public class SettingsActivity extends AppCompatActivity {
-    //pref  variables
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
-
     //view variables
     private ActionBar actionBar;
     private Switch themeSwitch;
-
 
     /**
      * again we are instatiating our views and loading shared preferences
@@ -34,12 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-        if (sp.getBoolean(THEME,false))
-            setTheme(R.style.AppTheme_Dark);
-        else
-            setTheme(R.style.AppTheme);
-
+        updateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -47,7 +40,8 @@ public class SettingsActivity extends AppCompatActivity {
         actionBar.setTitle("Settings");
 
         themeSwitch = findViewById(R.id.change);
-        themeSwitch.setChecked(sp.getBoolean(THEME,false));
+
+        themeSwitch.setChecked(Loader.getInstance(this).getTheme());
 
         /*
         Depending on the switch it calls the changeTheme function
@@ -81,15 +75,17 @@ public class SettingsActivity extends AppCompatActivity {
      * @param darkTheme true/false for dark/light
      */
     public void changeTheme(boolean darkTheme){
-        SharedPreferences.Editor editor = getSharedPreferences(PREFNAME,MODE_PRIVATE).edit();
-        editor.putBoolean(THEME,darkTheme);
-        editor.apply();
-
+        Loader.getInstance(this).saveTheme(darkTheme);
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
 
-
+    public void updateTheme(){
+        if (Loader.getInstance(this).getTheme())
+            setTheme(R.style.AppTheme_Dark);
+        else
+            setTheme(R.style.AppTheme);
+    }
 
 }

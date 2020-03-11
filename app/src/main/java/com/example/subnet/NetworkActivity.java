@@ -3,7 +3,6 @@ package com.example.subnet;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,16 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.subnet.address.Network;
+import com.example.subnet.singleton.Loader;
 
 /**
  * @author Alex,Daniel
  * @version 1.0
  */
 public class NetworkActivity extends AppCompatActivity {
-    //pref variables
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
-
     //view variables
     private ActionBar subnetBar;
     private Button calculate;
@@ -42,12 +38,7 @@ public class NetworkActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-        if (sp.getBoolean(THEME,false))
-            setTheme(R.style.AppTheme_Dark);
-        else
-            setTheme(R.style.AppTheme);
-
+        updateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network);
 
@@ -130,6 +121,10 @@ public class NetworkActivity extends AppCompatActivity {
         }
     }
 
-
-
+    public void updateTheme(){
+        if (Loader.getInstance(this).getTheme())
+            setTheme(R.style.AppTheme_Dark);
+        else
+            setTheme(R.style.AppTheme);
+    }
 }

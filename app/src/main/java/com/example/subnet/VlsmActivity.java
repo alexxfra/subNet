@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,17 +14,20 @@ import android.widget.Toast;
 import com.example.subnet.address.Network;
 import com.example.subnet.address.Vlsm;
 import com.example.subnet.dialog.HostDialog;
+import com.example.subnet.singleton.Loader;
 
 import java.util.ArrayList;
 
+/**
+ * @author Alex, Daniel
+ * @version 1.0
+ *
+ * Activity used to display subnetworks according to the entered input.
+ */
 public class VlsmActivity extends AppCompatActivity implements HostDialog.dialogListener{
 
     //log tag
     private static final String TAG = "VlsmActivity";
-
-    //pref variables
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
 
     //view variables
     private Button btn;
@@ -39,12 +41,7 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-        if (sp.getBoolean(THEME,false))
-            setTheme(R.style.AppTheme_Dark);
-        else
-            setTheme(R.style.AppTheme);
-
+        updateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vlsm);
 
@@ -153,6 +150,13 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
         int prefix = Integer.parseInt(this.prefix.getText().toString());
 
         return net.stringToLong(strAddress) & net.prefixToMask(prefix);
+    }
+
+    public void updateTheme(){
+        if (Loader.getInstance(this).getTheme())
+            setTheme(R.style.AppTheme_Dark);
+        else
+            setTheme(R.style.AppTheme);
     }
 }
 

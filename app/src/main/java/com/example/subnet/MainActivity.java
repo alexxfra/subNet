@@ -2,7 +2,6 @@ package com.example.subnet;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,15 +13,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.subnet.singleton.Loader;
+
 /**
  * @author Daniel
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    //pref variables
-    private static final String PREFNAME = "preferences";
-    private static final String THEME = "dark_theme";
-
     //view variables
     private ActionBar homeBar;
     private Button one,two,three,four;
@@ -34,12 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sp = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-        if (sp.getBoolean(THEME,false))
-            setTheme(R.style.AppTheme_Dark);
-        else
-            setTheme(R.style.AppTheme);
-
+        updateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -134,5 +126,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /**
+     * used in all activities to update the theme
+     */
+    public void updateTheme(){
+        if (Loader.getInstance(this).getTheme())
+            setTheme(R.style.AppTheme_Dark);
+        else
+            setTheme(R.style.AppTheme);
     }
 }
