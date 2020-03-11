@@ -6,6 +6,6 @@ Supports:
 - Mask conversion
 
 Developed by:
-Alex - Main subnetting logic and Activity functionality
-Daniel - Main Activity design, Dialog and View master
-Xiao - Main Layout design, Activity functionality and Themeing
+- Alex - Main subnetting logic and Activity functionality
+- Daniel - Main Activity design, Dialog and View master
+- Xiao - Main Layout design, Activity functionality and Themeing
