@@ -105,7 +105,8 @@ public class Network {
      * @return Binary format of network specifications
      */
     public String toNetworkBinary(){
-        return  formatLongToBinary(this.network) + "\n" +
+        return  formatLongToBinary(this.hostInput) + "\n" +
+                formatLongToBinary(this.network) + "\n" +
                 formatLongToBinary(this.mask) + "\n" +
                 formatLongToBinary(this.network+1) + "\n" +
                 formatLongToBinary(this.broadcast-1) + "\n" +
@@ -221,6 +222,7 @@ public class Network {
         for(int i = 0; i < 4; i++){
             LInput[i] = Long.parseLong(strInput[i]);
         }
+
         return longArrayToLong(LInput);
     }
 

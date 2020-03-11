@@ -19,7 +19,7 @@
     <string name="trash">Empty</string>
     <string name="calculate">Calculate</string>
     <string name="ipSpecsDecimal">Network: \nSubnet: \nHost range: \nBroadcast: \nAvailable hosts: </string>
-    <string name="ipSpecsBinary">Network: \nSubnet: \nFirst host: \nLast host: \nBroadcast: </string>
+    <string name="ipSpecsBinary">Host: \nNetwork: \nSubnet: \nFirst host: \nLast host: \nBroadcast: </string>
 
     <string name="networkConfiguration">Network Configuration</string>
     <string name="amountNetwork">Enter the amount of networks:</string>

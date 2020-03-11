@@ -127,7 +127,7 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.Dialog
             long[] longUserInput = {Long.parseLong(userInput[0]),Long.parseLong(userInput[1]),Long.parseLong(userInput[2]),Long.parseLong(userInput[3]),Long.parseLong(userInput[4]),Long.parseLong(userInput[5])};
 
             //long if to check if every field is empty has the correct format.
-            if((longUserInput[0] > 0 && longUserInput[0] < 256) && (longUserInput[1] > 0 && longUserInput[1] < 256) && (longUserInput[2] > 0 && longUserInput[2] < 256) && (longUserInput[3] > 0 && longUserInput[3] < 256) && (longUserInput[4] > 0 && longUserInput[4] < 32) && (longUserInput[5] <= Math.pow(2,32-longUserInput[4])/4)){
+            if((longUserInput[0] >= 0 && longUserInput[0] < 256) && (longUserInput[1] >= 0 && longUserInput[1] < 256) && (longUserInput[2] >= 0 && longUserInput[2] < 256) && (longUserInput[3] >= 0 && longUserInput[3] < 256) && (longUserInput[4] >= 0 && longUserInput[4] < 32) && (longUserInput[5] <= Math.pow(2,32-longUserInput[4])/4)){
                 return true;
             }
             else{

@@ -107,7 +107,7 @@ public class NetworkActivity extends AppCompatActivity {
             long[] longUserInput = {Long.parseLong(userInput[0]),Long.parseLong(userInput[1]),Long.parseLong(userInput[2]),Long.parseLong(userInput[3]),Long.parseLong(userInput[4])};
 
             //long if to check if every field is empty has the correct format.
-            if((longUserInput[0] > 0 && longUserInput[0] < 256) && (longUserInput[1] > 0 && longUserInput[1] < 256) && (longUserInput[2] > 0 && longUserInput[2] < 256) && (longUserInput[3] > 0 && longUserInput[3] < 256) && (longUserInput[4] > 0 && longUserInput[4] < 32)){
+            if((longUserInput[0] >= 0 && longUserInput[0] < 256) && (longUserInput[1] >= 0 && longUserInput[1] < 256) && (longUserInput[2] >= 0 && longUserInput[2] < 256) && (longUserInput[3] >= 0 && longUserInput[3] < 256) && (longUserInput[4] >= 0 && longUserInput[4] < 32)){
                return true;
             }
             else{
