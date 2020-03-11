@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -28,13 +27,17 @@ public class NetworkActivity extends AppCompatActivity {
     private ActionBar subnetBar;
     private Button calculate;
     private TextView decimalSpecifications, binarySpecifications, decimalOutput, binaryOutput;
-    private EditText octet1, octet2, octet3, octet4, pref;
+    private EditText octet1, octet2, octet3, octet4, prefix;
 
     // Making an instance of Network for subnetting capabilities
     private Network n = new Network();
 
+    //log TAG
+    private static final String TAG = "NetworkActivity";
+
     /**
      * Loading our Theme and instantiating views.
+     * We are alsto setting an onclick listener to generate a config after the user clicks a button.
      * @param savedInstanceState default parameter
      */
     @Override
@@ -52,12 +55,13 @@ public class NetworkActivity extends AppCompatActivity {
          binarySpecifications = findViewById(R.id.networkBinSpec);
          decimalOutput = findViewById(R.id.networkDecOut);
          binaryOutput = findViewById(R.id.networkBinOut);
+         calculate = findViewById(R.id.subnetCalculate);
 
          octet1 = findViewById(R.id.networkOct1);
-         octet2 = findViewById(R.id.octet2);
-         octet3 = findViewById(R.id.octet3);
-         octet4 = findViewById(R.id.octet4);
-         pref = findViewById(R.id.prefix);
+         octet2 = findViewById(R.id.networkOct2);
+         octet3 = findViewById(R.id.networkOct3);
+         octet4 = findViewById(R.id.networkOct4);
+         prefix = findViewById(R.id.networkPrefix);
 
 
         subnetBar = getSupportActionBar();
@@ -66,39 +70,18 @@ public class NetworkActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        calculate = findViewById(R.id.subnetCalculate);
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean clearedChecks = true;
-                int prefix = 0;
-                long[] address = new long[4];
-                String strAddress = octet1.getText().toString() + " " + octet2.getText().toString() + " " + octet3.getText().toString() + " " + octet4.getText().toString();
 
-                try {
-                    prefix = Integer.parseInt(pref.getText().toString());
-                    address = inputToLongArray(strAddress);
-                }
-                catch (Exception e){
-                    Log.d("EXCEPTION", "onClick: ZLE UDAJE KOKOT");
-                    clearedChecks = false;
-                    Toast.makeText(getBaseContext(),"Fields can not be empty", Toast.LENGTH_SHORT).show();
-
-                }
-
-
-                if (clearedChecks && (prefix > 0 && prefix < 32) && ((address[0] > -1 && address[0] < 256) && (address[1] > -1 && address[1] < 256) && (address[2] > -1 && address[2] < 256) && (address[3] > -1 && address[3] < 256))){
+                if (validateInput()){
                     decimalSpecifications.setVisibility(View.VISIBLE);
                     binarySpecifications.setVisibility(View.VISIBLE);
 
-                    n.setNetwork(address,prefix);
-                    decimalOutput.setText(n.toDecimals());
-                    binaryOutput.setText(n.toBits());
+                    //n.setNetwork(address,prefix);
+                    decimalOutput.setText(n.toNetworkDecimal());
+                    binaryOutput.setText(n.toNetworkBinary());
                 }
-                else{
-                    Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
-                }
-
             }
         });
     }
@@ -119,4 +102,29 @@ public class NetworkActivity extends AppCompatActivity {
         }
         return LInput;
     }
+
+    public boolean validateInput(){
+        //This try/catch will thrown an exception if input is empty.
+        try {
+            String[] userInput = {octet1.getText().toString(),octet2.getText().toString(),octet3.getText().toString(),octet4.getText().toString(),prefix.getText().toString()};
+            long[] longUserInput = {Integer.parseInt(userInput[0]),Integer.parseInt(userInput[1]),Integer.parseInt(userInput[2]),Integer.parseInt(userInput[3]),Integer.parseInt(userInput[4])};
+
+            //long if to check if every field is empty has the correct format.
+            if((longUserInput[0] > 0 && longUserInput[0] < 256) && (longUserInput[1] > 0 && longUserInput[1] < 256) && (longUserInput[2] > 0 && longUserInput[2] < 256) && (longUserInput[3] > 0 && longUserInput[3] < 256) && (longUserInput[4] > 0 && longUserInput[4] < 32)){
+               return true;
+            }
+            else{
+                Toast.makeText(getBaseContext(),"Incorrect format", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        }
+        catch (Exception e){
+            Toast.makeText(getBaseContext(),"Fields can't be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+
+
 }

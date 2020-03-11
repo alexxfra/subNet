@@ -2,12 +2,8 @@ package com.example.subnet.address;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.res.TypedArrayUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Vlsm {
     private static final String TAG = "Vlsm";
@@ -70,6 +66,6 @@ public class Vlsm {
 
     @Override
     public String toString() {
-        return networks.get(0).toDecimals();
+        return networks.get(0).toNetworkDecimal();
     }
 }

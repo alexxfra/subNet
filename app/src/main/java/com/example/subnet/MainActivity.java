@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //view variables
     private ActionBar homeBar;
-    private Button one,two,three,four,five;
+    private Button one,two,three,four;
 
     /**
      * On each onCreate we will initiailze View elements and load our Theme from shared preferences. If we do something else it will be documented.

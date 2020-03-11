@@ -21,8 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String PREFNAME = "preferences";
     private static final String THEME = "dark_theme";
 
-    private TextView textView, fz;
-    private SeekBar seekBar;
+
     private ActionBar actionBar;
     private Switch themeSwitch;
     private ConstraintLayout background;
@@ -39,38 +38,14 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        textView = findViewById(R.id.size);
-        fz = findViewById(R.id.Example);
-
         actionBar = getSupportActionBar();
         actionBar.setTitle("Settings");
 
         themeSwitch = findViewById(R.id.change);
         themeSwitch.setChecked(sp.getBoolean(THEME,false));
 
-        seekBar = findViewById(R.id.fontSeeker);
-        seekBar.setProgress(10);
-        seekBar.setMin(20);
-        seekBar.setMax(40);
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textView.setText(""+progress);
-                fz.setTextSize(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
         background = findViewById(R.id.view);
+
         themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

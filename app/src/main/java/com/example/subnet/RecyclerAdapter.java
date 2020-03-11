@@ -40,7 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Network net = mDataset.get(position);
 
         holder.holderStats.setText(R.string.vlsmSpecs);
-        holder.holderOutput.setText(net.getVlsmInfo());
+        holder.holderOutput.setText(net.toVlsm());
     }
 
     @Override

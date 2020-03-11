@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class SubnetMaskActivity extends AppCompatActivity {
 
         n = new Network();
 
-        textView = findViewById(R.id.prefix);
+        textView = findViewById(R.id.networkPrefix);
         mask = findViewById(R.id.subnetMask);
         seekBar = findViewById(R.id.maskSeeker);
 
@@ -69,9 +68,9 @@ public class SubnetMaskActivity extends AppCompatActivity {
                 decSpecs.setVisibility(View.VISIBLE);
                 binSpecs.setVisibility(View.VISIBLE);
 
-                mask.setText(n.getMaskDecimal());
-                decOut.setText(n.getMaskInfo());
-                binOut.setText(n.getBitMaskInfo());
+                mask.setText(n.formatMaskToDecimal());
+                decOut.setText(n.toMaskDecimal());
+                binOut.setText(n.toMaskBinary());
             }
 
             @Override
