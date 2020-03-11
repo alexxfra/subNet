@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Dialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("This app is meant for network Administrators\nAs well as network" +
-                " e-word\nMakes it easier to calculate the Subnet\nAnd save it");
+                " e-word\nMakes it easier to calculate the Subnet");
         builder.setTitle("About");
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

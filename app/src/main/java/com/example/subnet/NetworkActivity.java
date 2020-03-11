@@ -49,7 +49,7 @@ public class NetworkActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subnet_calc);
+        setContentView(R.layout.activity_network);
 
          decimalSpecifications = findViewById(R.id.networkDecSpec);
          binarySpecifications = findViewById(R.id.networkBinSpec);

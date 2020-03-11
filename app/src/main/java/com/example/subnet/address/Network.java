@@ -94,9 +94,10 @@ public class Network {
     public String toNetworkDecimal(){
         return  formatLongToDecimal(this.network) + "\n" +
                 formatLongToDecimal(this.mask) + "\n" +
-                formatLongToDecimal(this.network+1) + "\n" +
+                formatLongToDecimal(this.network+1) + " - " +
                 formatLongToDecimal(this.broadcast-1) + "\n" +
-                formatLongToDecimal(this.broadcast);
+                formatLongToDecimal(this.broadcast)+ "\n" +
+                (-2 + (int)Math.pow(2,32-this.prefix));
     }
 
     /**
@@ -135,7 +136,7 @@ public class Network {
      * @return Decimal format containing shorter info of a subnetwork
      */
     public String toVlsm(){
-        return  formatLongToDecimal(this.network) + "\n" +
+        return  formatLongToDecimal(this.network) + " /"+ this.prefix + "\n" +
                 formatLongToDecimal(this.network+1) + " - " +
                 formatLongToDecimal(this.broadcast-1) + "\n" +
                 formatLongToDecimal(this.broadcast) + "\n" +
@@ -213,7 +214,7 @@ public class Network {
      * @return ip in long format
      */
     public long stringToLong(String input){
-        String[] strInput = input.split("\\. ");
+        String[] strInput = input.split("\\.");
 
         long[] LInput = new long[4];
 
@@ -221,6 +222,19 @@ public class Network {
             LInput[i] = Long.parseLong(strInput[i]);
         }
         return longArrayToLong(LInput);
+    }
+
+    /**
+     * Changes the prefix to a long value of a mask
+     * @param prefix prefix of a subnet mask
+     * @return subnet mask in value in long
+     */
+    public long prefixToMask(int prefix){
+        StringBuilder sb = new StringBuilder();
+        while(sb.length() < prefix){
+            sb.append("1");
+        }
+        return Long.parseLong(sb.toString(),2)<<(32-prefix);
     }
 
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -38,7 +39,7 @@ public class HostDialog extends AppCompatDialogFragment{
         final LinearLayout populateMe = view.findViewById(R.id.populateVlsm);
         for(int i = 0; i<hostNum;i++){
             TextView tv = new TextView(view.getContext());
-            tv.setText("Enter network size");
+            tv.setText(getContext().getString(R.string.subnetNumber, Integer.toString(i+1)));
             populateMe.addView(tv);
             EditText editText = new EditText(view.getContext());
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -76,7 +77,7 @@ public class HostDialog extends AppCompatDialogFragment{
         try {
             listener = (dialogListener) context;
         } catch(ClassCastException e){
-            //throw new ClassCastException(context.toString() + "debug");
+            throw new ClassCastException(context.toString() + "debug");
         }
     }
 

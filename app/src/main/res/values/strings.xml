@@ -18,7 +18,8 @@
     <string name="ip4Address">IPv4 network address</string>
     <string name="trash">Empty</string>
     <string name="calculate">Calculate</string>
-    <string name="ipSpecs">Network: \nSubnet: \nFirst host: \nLast host: \nBroadcast: </string>
+    <string name="ipSpecsDecimal">Network: \nSubnet: \nHost range: \nBroadcast: \nAvailable hosts: </string>
+    <string name="ipSpecsBinary">Network: \nSubnet: \nFirst host: \nLast host: \nBroadcast: </string>
 
     <string name="networkConfiguration">Network Configuration</string>
     <string name="amountNetwork">Enter the amount of networks:</string>
@@ -32,4 +33,5 @@
     <string name="hostst">Subnets: </string>
     <string name="subnetHint">5</string>
     <string name="vlsmSpecs">Network: \nHost Range: \nBroadcast: \nUsed addresses: </string>
+    <string name="subnetNumber">Enter network %1$s size</string>
 </resources>

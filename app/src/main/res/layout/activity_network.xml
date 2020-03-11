@@ -156,7 +156,7 @@
         android:layout_marginStart="10dp"
         android:textSize="15sp"
         android:visibility="invisible"
-        android:text="@string/ipSpecs"
+        android:text="@string/ipSpecsDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
 
@@ -168,7 +168,7 @@
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:visibility="invisible"
-        android:text="@string/ipSpecs"
+        android:text="@string/ipSpecsBinary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/networkDecSpec" />
 
@@ -176,7 +176,7 @@
         android:id="@+id/networkDecOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/networkDecSpec"
         app:layout_constraintTop_toTopOf="@+id/outputGuideline" />
@@ -185,7 +185,7 @@
         android:id="@+id/networkBinOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/networkBinSpec"

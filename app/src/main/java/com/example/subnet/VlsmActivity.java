@@ -60,6 +60,7 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
             @Override
             public void onClick(View v) {
                 if (validateInput()){
+
                     int subnetNumber = Integer.parseInt(subnetCount.getText().toString());
 
                     HostDialog dialog = new HostDialog();
@@ -68,10 +69,15 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
                     dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), "NetworkTry");
                 }
+                else
+                    Log.d(TAG, "onClick: KMS");
             }
         });
     }
 
+    /**
+     * initializes the Recyclerview
+     */
     private void initializeRec() {
         RecyclerView rv = findViewById(R.id.recycler);
         RecyclerAdapter rva = new RecyclerAdapter(this.networks);
@@ -81,31 +87,30 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
 
     @Override
     public void applyHosts(ArrayList<Integer> networkSize){
-        int prefix = Integer.parseInt(this.prefix.getText().toString());
-        String[] strArr = new String[]{octet1.getText().toString(), octet2.getText().toString(), octet3.getText().toString(), octet4.getText().toString()};
-        long[] longInput= new long[]{Long.parseLong(strArr[0]), Long.parseLong(strArr[1]), Long.parseLong(strArr[2]), Long.parseLong(strArr[3])};
-        long longNetwork = longArrToLong(longInput) & vlsm.maskFromPrefix(prefix);
-
+        /*
+         Calculating the maximum amount of possible hosts inside a network
+         */
         int sum = 0;
-
-        int[] hosts = new int[networkSize.size()];
-        for(int i = 0; i < networkSize.size(); i++){
-            hosts[i] = networkSize.get(i);
-            sum += Math.pow(2,32-vlsm.prefixFromHosts(hosts[i]))-2;
-            Log.d(TAG, "applyHosts: HOST" + i);
+        for(int i = 0; i < networkSize.size(); i++) {
+            sum += Math.pow(2, 32 - vlsm.prefixFromHosts(networkSize.get(i))) - 2;
         }
 
-        if(sum <= Math.pow(2,32-prefix)-2*hosts.length){
-            vlsm.makeSubnets(longNetwork, hosts);
+        /*
+        creating a network in long format
+         */
+        long longNetwork = getNetworkAddress();
+        int prefix = Integer.parseInt(this.prefix.getText().toString());
+
+        /*
+        this checks if the number of hosts the user entered exceeds the possible amount
+         */
+        if(sum <= Math.pow(2,32-prefix)-2*networkSize.size()){
+            vlsm.makeSubnets(longNetwork, networkSize);
             networks = (ArrayList<Network>) vlsm.getNetworks().clone();
             initializeRec();
         }
         else
             Toast.makeText(getBaseContext(),"Too many hosts for defined network size", Toast.LENGTH_LONG).show();
-    }
-
-    public long longArrToLong(long[] input){
-        return ((input[0]<<24) + (input[1]<<16) + (input[2]<<8) + input[3]);
     }
 
     /**
@@ -139,6 +144,16 @@ public class VlsmActivity extends AppCompatActivity implements HostDialog.dialog
         }
     }
 
+    /**
+     * In case the user didn't input a network address it will automatically calculate it from the host ip.
+     * @return long value of a network address
+     */
+    public long getNetworkAddress(){
+        String strAddress = octet1.getText().toString() + "." + octet2.getText().toString() + "." + octet3.getText().toString() + "." + octet4.getText().toString();
+        int prefix = Integer.parseInt(this.prefix.getText().toString());
+
+        return net.stringToLong(strAddress) & net.prefixToMask(prefix);
+    }
 }
 
 

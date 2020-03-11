@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/softWhite</item>
+        <item name="lineHeight">20sp</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
@@ -14,6 +15,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/softWhite</item>
         <item name="android:windowBackground">@color/darkColor</item>
+        <item name="lineHeight">20sp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

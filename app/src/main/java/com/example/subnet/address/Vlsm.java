@@ -4,6 +4,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Alex
@@ -28,11 +30,11 @@ public class Vlsm {
     }
 
     /**
-     *
+     * This function populates our arraylist with subnetworks of a network that the user specified.
      * @param network network ipv4 address
      * @param hosts array of numbers of hosts in a network
      */
-    public void makeSubnets(long network, int[] hosts){
+    public void makeSubnets(long network, ArrayList<Integer> hosts){
 
         networks.clear();
 
@@ -40,15 +42,20 @@ public class Vlsm {
         sortHosts(hosts);
 
         Log.d(TAG, "makeSubnets: ADDING FIRST");
-        networks.add(new Network(network, prefixFromHosts(hosts[0])));
+        networks.add(new Network(network, prefixFromHosts(hosts.get(0))));
 
-        if (hosts.length > 1)
-            for (int i = 1; i < hosts.length; i++){
+        if (hosts.size() > 1)
+            for (int i = 1; i < hosts.size(); i++){
                 Log.d(TAG, "makeSubnets: ADDING NUNBER " + i+1);
-                networks.add(new Network(networks.get(i-1).getBroadcast()+1, prefixFromHosts(hosts[i])));
+                networks.add(new Network(networks.get(i-1).getBroadcast()+1, prefixFromHosts(hosts.get(i))));
             }
     }
 
+    /**
+     * This function returns the lowest possible prefix for the number of hosts provided
+     * @param hosts number of hosts
+     * @return lowes prefix possible for those hosts
+     */
     public int prefixFromHosts(int hosts){
         for(int i = 1; i < 32; i++){
             if(Math.pow(2,i) -2  >= hosts){
@@ -58,33 +65,23 @@ public class Vlsm {
         return 0;
     }
 
-    public long maskFromPrefix(int prefix){
-        StringBuilder sb = new StringBuilder();
-        while(sb.length() < prefix){
-            sb.append("1");
-        }
-        return Long.parseLong(sb.toString(),2)<<(32-prefix);
-    }
+    /**
+     * this functions sorts the hosts array list in the descending order
+     * @param hosts array list of hosts
+     * @return array list sorted from highest to lowest
+     */
+    public ArrayList<Integer> sortHosts(ArrayList<Integer> hosts){
 
-    public int[] sortHosts(int[] hosts){
-
-        Arrays.sort(hosts);
-        int tmp;
-        for (int i = 0; i < hosts.length/2; i++){
-            tmp = hosts[i];
-            hosts[i] = hosts[hosts.length-1-i];
-            hosts[hosts.length-1-i] = tmp;
-        }
+        Collections.sort(hosts,Collections.<Integer>reverseOrder());
 
         return hosts;
     }
 
+    /**
+     * getter for our arraylist
+     * @return arraylist of networks
+     */
     public ArrayList<Network> getNetworks() {
         return networks;
-    }
-
-    @Override
-    public String toString() {
-        return networks.get(0).toNetworkDecimal();
     }
 }
