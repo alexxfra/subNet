@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * Activity used to display subnetworks according to the entered input.
  */
-public class VlsmActivity extends AppCompatActivity implements HostDialog.dialogListener{
+public class VlsmActivity extends AppCompatActivity implements HostDialog.DialogListener {
 
     //log tag
     private static final String TAG = "VlsmActivity";

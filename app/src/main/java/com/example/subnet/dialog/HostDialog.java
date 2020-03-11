@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -29,9 +28,9 @@ import java.util.ArrayList;
  * This class is used to create our dialog and manages the inflation of the dialog with needed views.
  */
 public class HostDialog extends AppCompatDialogFragment{
-    private dialogListener listener;
-    ArrayList<EditText> editTexts = new ArrayList<>();
-    ArrayList<Integer> networkSize = new ArrayList<>();
+    private DialogListener listener;
+    private ArrayList<EditText> editTexts = new ArrayList<>();
+    private ArrayList<Integer> networkSize = new ArrayList<>();
 
     @NonNull
     @Override
@@ -81,13 +80,13 @@ public class HostDialog extends AppCompatDialogFragment{
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (dialogListener) context;
+            listener = (DialogListener) context;
         } catch(ClassCastException e){
             throw new ClassCastException(context.toString() + "debug");
         }
     }
 
-    public interface dialogListener{
+    public interface DialogListener {
         void applyHosts(ArrayList<Integer> networkSize);
     }
 }

@@ -3,8 +3,6 @@ package com.example.subnet.address;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -15,10 +13,11 @@ import java.util.Collections;
  * It utilizes a list of networks which are taking the role of a subnetwork.
  */
 public class Vlsm {
-    //pref variables
+    //log tag
     private static final String TAG = "Vlsm";
+
+    //variables
     private ArrayList<Network> networks;
-    private Network net;
 
     /**
      * Basic constructor. When creating an instance of Vlsm we only need to instantiate our Arraylist and Network
@@ -26,7 +25,6 @@ public class Vlsm {
      */
     public Vlsm(){
         networks = new ArrayList<>();
-        net = new Network();
     }
 
     /**
